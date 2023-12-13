@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: psql
+    restart: always
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=tset
+      - POSTGRES_DB=mysite
+    volumes:
+      - ~/dev/db-data/psql:/var/lib/postgresql/data
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    container_name: pg-admin
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: pgsql
+      ADMINER_DEFAULT_DB_HOST: psql
+      ADMINER_DEFAULT_DB_NAME: test
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+    ports:
+      - 8080:8080
+
+volumes:
+  db-data:
+    labels:
+      - "db-data"
