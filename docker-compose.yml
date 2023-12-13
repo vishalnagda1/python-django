@@ -11,11 +11,6 @@ services:
       - POSTGRES_DB=mysite
     volumes:
       - ~/dev/db-data/psql:/var/lib/postgresql/data
-      - type: volume
-        source: db-data
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
     ports:
       - "5432:5432"
 
