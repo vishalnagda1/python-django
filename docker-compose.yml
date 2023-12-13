@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
   db:
@@ -6,17 +6,17 @@ services:
     container_name: psql
     restart: always
     environment:
-      - POSTGRES_USER=test
-      - POSTGRES_PASSWORD=tset
-      - POSTGRES_DB=mysite
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: tset
+      POSTGRES_DB: mysite
     volumes:
-      - ~/dev/db-data/psql:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - ~/dev/db-data/psql/mysite:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
 
-  adminer:
-    image: adminer
+  db-admin:
+    image: adminer:latest
     container_name: pg-admin
+    restart: always
     depends_on:
       - db
     environment:
@@ -26,9 +26,9 @@ services:
       ADMINER_DESIGN: nette
       ADMINER_PLUGINS: tables-filter tinymce
     ports:
-      - 8080:8080
+      - "8080:8080"
 
 volumes:
   db-data:
-    labels:
+labels:
       - "db-data"
