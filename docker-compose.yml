@@ -10,19 +10,19 @@ services:
       POSTGRES_PASSWORD: tset
       POSTGRES_DB: mysite
     volumes:
-      - ~/dev/db-data/psql/mysite:/var/lib/postgresql/data
       - db-data:/var/lib/postgresql/data
+      - ~/dev/db-data/psql/mysite:/db-dump
 
   db-admin:
-    image: adminer:latest
+    image: adminer
     container_name: pg-admin
     restart: always
     depends_on:
       - db
     environment:
       ADMINER_DEFAULT_DB_DRIVER: pgsql
-      ADMINER_DEFAULT_DB_HOST: psql
-      ADMINER_DEFAULT_DB_NAME: test
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: mysite
       ADMINER_DESIGN: nette
       ADMINER_PLUGINS: tables-filter tinymce
     ports:
