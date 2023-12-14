@@ -12,6 +12,8 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
       - ~/dev/db-data/psql/mysite:/db-dump
+    ports:
+      - "5432:5432"
 
   db-admin:
     image: adminer
