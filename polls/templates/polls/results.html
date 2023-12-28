@@ -7,10 +7,14 @@
 </head>
 <body>
     <h1>{{ question.question_text }}</h1>
+    {% if question.choice_set.count %}
     <ul>
         {% for choice in question.choice_set.all %}
         <li>{{ choice.choice_text }}: {{choice.vote}}</li>
         {% endfor %}
     </ul>
+    {% else %}
+    <p>Poll not started yet!</p>
+    {% endif %}
 </body>
 </html>
